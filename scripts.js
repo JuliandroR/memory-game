@@ -1,3 +1,29 @@
+const srcBackImage = "./img/back.png"
+let srcFrontImage = ["./img/1.png", "./img/2.png", "./img/3.png", "./img/4.png", "./img/5.png"]
+let cont = 1, src1 = ""
+
+const createCard = (srcFrontImage) => {
+  let section = document.createElement('section')
+  section.setAttribute('class', 'memory-card')
+
+  let frontImage = document.createElement('img')
+  frontImage.setAttribute('class', 'front-face')
+  frontImage.setAttribute('src', srcFrontImage)
+  section.appendChild(frontImage)
+
+  let backImage = document.createElement('img')
+  backImage.setAttribute('class', 'back-face')
+  backImage.setAttribute('src', srcBackImage)
+  section.appendChild(backImage)
+
+  return section
+}
+
+for (let i = 0; i < srcFrontImage.length; i++) {
+  document.getElementById('container-game').appendChild(createCard(srcFrontImage[i]))
+  document.getElementById('container-game').appendChild(createCard(srcFrontImage[i]))
+}
+
 const cards = document.querySelectorAll('.memory-card');
 
 let hasFlippedCard = false;
@@ -25,7 +51,7 @@ function flipCard() {
 }
 
 function checkForMatch() {
-  let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
+  let isMatch = firstCard.children[0].src === secondCard.children[0].src;
 
   isMatch ? disableCards() : unflipCards();
 }
@@ -33,7 +59,6 @@ function checkForMatch() {
 function disableCards() {
   firstCard.removeEventListener('click', flipCard);
   secondCard.removeEventListener('click', flipCard);
-
   resetBoard();
 }
 
